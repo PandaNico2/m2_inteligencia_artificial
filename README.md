@@ -296,7 +296,7 @@ Regra 23
  → Muito adequado
 ```
 ##  Autores
-Isadora de Mello - Ciências da computação - UNIVALI
+Isadora de Mello - Ciências da computação - UNIVALI <br>
 Larissa de Sousa Gouvea - Engenharia da computação - UNIVALI
 
 ##  Melhorias Futuras
