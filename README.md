@@ -91,7 +91,7 @@ Animal
   └── é → Recomendação final
 ```
 
-3. **Regras da árvore de decisão*:
+3. **Regras da árvore de decisão**:
 ```
 Regras de Adequação do Ambiente
 Regra 1
