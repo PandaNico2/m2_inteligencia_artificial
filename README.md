@@ -26,7 +26,7 @@ Sistema especialista desenvolvido para a disciplina de Inteligência Artificial 
 ## Estrutura do Projeto
 ```
 m2_inteligencia_artificial/
-├── index.php          # Formulário de interação com o usuário
+├── index.html          # Formulário de interação com o usuário
 ├── motor_inferencia.php    # Lógica do sistema especialista
 ├── README.md           # Este arquivo
 └── assets/             # Pasta para img/css
@@ -48,6 +48,7 @@ O sistema utiliza:
 
 2. **Fluxo de decisão**:
 ```
+2. **Fluxo de decisão**:
 Pessoa
   ├── tem Tempo → Tempo
   ├── tem Atividade Física → Atividade
@@ -56,251 +57,148 @@ Pessoa
   ├── tem Investimento → Investimento
 
 Tempo
-  ├── é baixo → leva a → Recomendação = Gato
+  ├── é baixo → leva a → Recomendação = Gato (Regra 18)
   └── é alto → depende de → Atividade Física
 
 Atividade Física
-  ├── é sedentário → leva a → Recomendação = Gato
-  ├── é ativo → depende de → Ambiente
+  ├── é sedentário → leva a → Recomendação = Gato (Regra 19)
+  └── é ativo → depende de → Ambiente
 
 Ambiente
-  ├── é inadequado → leva a → Reavaliar
+  ├── é inadequado → leva a → Recomendação = Repensar adoção (Regra 20)
   ├── é pouco adequado
   │     ├── depende de → Investimento
-  │     └── Investimento = baixo → Gato
-  │     └── Investimento = médio/alto → Cachorro pequeno
-  ├── é muito adequado
-        ├── Preferência = independente → Gato
-        └── Preferência = dependente → Cachorro
+  │     ├── Investimento = Baixo → Recomendação = Gato (Regra 21)
+  │     └── Investimento = Médio/Médio-Alto/Alto → Recomendação = Cachorro pequeno (Regra 22)
+  └── é adequado/muito adequado
+        ├── Preferência = independente/gato → Recomendação = Gato (Regra 23)
+        └── Preferência = dependente/cachorro → Recomendação = Cachorro (Regra 24)
 
 Investimento
-  ├── depende de → Adoção
-  ├── depende de → Cuidados especiais
-  ├── depende de → Porte
-  ├── depende de → Tosa
-  └── leva a → Resultado = Baixo / Médio / Alto
+  ├── Pretende adotar = não → Investimento = Alto (Regra 11)
+  ├── Pretende adotar = sim
+  │     ├── Cuidados especiais = sim → Investimento = Médio/Alto (Regra 12)
+  │     └── Cuidados especiais = não
+  │           ├── Porte = médio → Investimento = Médio (Regra 13)
+  │           ├── Porte = grande → Investimento = Alto (Regra 14)
+  │           └── Porte = pequeno
+  │                 ├── Precisa de tosa = sim → Investimento = Médio (Regra 15)
+  │                 └── Precisa de tosa = não
+  │                       ├── Preferência = independente → Investimento = Baixo (Regra 16)
+  │                       └── Preferência = dependente → Investimento = Médio (Regra 17)
 
 Animal
   ├── pode ser → Gato / Cachorro / Cachorro pequeno
-  └── é → Recomendação
+  └── é → Recomendação final
 ```
 
 3. **Regras da árvore de decisão*:
 ```
-Regras do Mapa Central
+<b>Regras de Adequação do Ambiente</b>
 Regra 1
- SE Tempo = baixo
- → Escolha = Gato
-
+Se: Tipo de moradia = apartamento, Sacada com tela = não
+Então: Adequação = Pouco adequado
 
 Regra 2
- SE Tempo = alto
- E Nível de atividade física = sedentário
- → Escolha = Gato
-
+Se: Tipo de moradia = apartamento, Sacada com tela = sim, Espaço interno ≥ 30 m²
+Então: Adequação = Adequado
 
 Regra 3
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = inadequado
- → Avalie novamente suas condições
-
+Se: Tipo de moradia = apartamento, Sacada com tela = sim, Espaço interno < 30 m²
+Então: Adequação = Inadequado
 
 Regra 4
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = pouco adequado
- E Investimento financeiro = baixo
- → Escolha = Gato
-
+Se: Tipo de moradia = casa sem quintal, Pet fica dentro = não
+Então: Adequação = Inadequado
 
 Regra 5
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = pouco adequado
- E Investimento financeiro = médio/alto
- → Escolha = Cachorro de pequeno porte
-
+Se: Tipo de moradia = casa sem quintal, Pet fica dentro = sim, Espaço interno ≥ 40 m²
+Então: Adequação = Pouco adequado
 
 Regra 6
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = muito adequado
- E Preferência pessoal = independente
- → Escolha = Gato
-
+Se: Tipo de moradia = casa sem quintal, Pet fica dentro = sim, Espaço interno < 40 m²
+Então: Adequação = Inadequado
 
 Regra 7
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = muito adequado
- E Preferência pessoal = dependente
- → Escolha = Cachorro
-Regras do Sub-mapa investimento inicial 
-Regra 8
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = não
- E Pretende adotar = não
- → Resultado = Alto (compra o animal)
+Se: Tipo de moradia = casa com quintal, Quintal cercado = não
+Então: Adequação = Inadequado
 
+Regra 8
+Se: Tipo de moradia = casa com quintal, Quintal cercado = sim, Ambiente com sombra = não
+Então: Adequação = Pouco adequado
 
 Regra 9
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = sim
- E Cuidados especiais = sim
- → Resultado = Médio/Alto
-
+Se: Tipo de moradia = casa com quintal, Quintal cercado = sim, Ambiente com sombra = sim, Área do quintal ≥ 60 m²
+Então: Adequação = Muito adequado
 
 Regra 10
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = sim
- E Cuidados especiais = não
- E Porte = médio/grande
- → Resultado = Alto
+Se: Tipo de moradia = casa com quintal, Quintal cercado = sim, Ambiente com sombra = sim, Área do quintal < 60 m²
+Então: Adequação = Pouco adequado
 
-
+<b>Regras de Nível de Investimento</b>
 Regra 11
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = sim
- E Cuidados especiais = não
- E Porte = pequeno
- E Precisa de tosa = sim
- → Resultado = Médio
-
+Se: Pretende adotar = não
+Então: Investimento = Alto
 
 Regra 12
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = sim
- E Cuidados especiais = não
- E Porte = pequeno
- E Precisa de tosa = não
- E Preferência pessoal = gato
- → Resultado = Baixo
-
+Se: Pretende adotar = sim, Cuidados especiais = sim
+Então: Investimento = Médio / Alto
 
 Regra 13
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Ambiente adequado = Pouco adequado
- E Pretende adotar = sim
- E Cuidados especiais = não
- E Porte = pequeno
- E Precisa de tosa = não
- E Preferência pessoal = cachorro
- → Resultado = Médio
+Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = médio
+Então: Investimento = Médio
 
-
- Regras do Sub-mapa ambiente adequado
 Regra 14
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = apartamento
- E Sacada com tela de proteção = não
- → Inadequado
-
+Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = grande
+Então: Investimento = Alto
 
 Regra 15
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = apartamento
- E Sacada com tela de proteção = sim
- E Espaço interno disponível < 30 m²
- → Inadequado
-
+Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = pequeno, Precisa de tosa = sim
+Então: Investimento = Médio
 
 Regra 16
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = apartamento
- E Sacada com tela de proteção = sim
- E Espaço interno disponível ≥ 30 m²
- → Pouco adequado
-
+Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = pequeno, Precisa de tosa = não, Preferência pessoal = independente
+Então: Investimento = Baixo
 
 Regra 17
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = casa sem quintal
- E Pet fica dentro de casa = não
- → Inadequado
+Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = pequeno, Precisa de tosa = não, Preferência pessoal = dependente
+Então: Investimento = Médio
 
-
+<b>Regras de Recomendação de Animal</b>
 Regra 18
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = casa sem quintal
- E Pet fica dentro de casa = sim
- E Espaço interno disponível entre 20–40 m²
- → Pouco adequado
-
+Se: Tempo disponível = baixo
+Então: Recomendação = Gato
 
 Regra 19
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = não
- E Tipo de moradia = casa sem quintal
- E Pet fica dentro de casa = sim
- E Espaço interno disponível ≥ 40 m²
- → Pouco adequado
-
+Se: Tempo disponível = alto, Atividade física = sedentário
+Então: Recomendação = Gato
 
 Regra 20
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = sim
- E Quintal cercado = não
- → Inadequado
-
+Se: Tempo disponível = alto, Atividade física = ativo, Adequado = inadequado
+Então: Recomendação = Melhor repensar a adoção no momento
 
 Regra 21
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = sim
- E Quintal cercado = sim
- E Ambiente com sombra = não
- → Inadequado
-
+Se: Tempo disponível = alto, Atividade física = ativo, Adequado = pouco adequado, Investimento = Baixo
+Então: Recomendação = Gato
 
 Regra 22
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = sim
- E Quintal cercado = sim
- E Ambiente com sombra = sim
- E Área do quintal < 60 m²
- → Pouco adequado
-
+Se: Tempo disponível = alto, Atividade física = ativo, Adequado = pouco adequado, Investimento = Médio ou Médio/Alto ou Alto
+Então: Recomendação = Cachorro pequeno
 
 Regra 23
- SE Tempo = alto
- E Nível de atividade física = ativo
- E Possui quintal = sim
- E Quintal cercado = sim
- E Ambiente com sombra = sim
- E Área do quintal ≥ 60 m²
- → Muito adequado
+Se: Tempo disponível = alto, Atividade física = ativo, Adequado = adequado ou muito adequado, Preferência pessoal = independente ou gato
+Então: Recomendação = Gato
+
+Regra 24
+Se: Tempo disponível = alto, Atividade física = ativo, Adequado = adequado ou muito adequado, Preferência pessoal = dependente ou cachorro
+Então: Recomendação = Cachorro
 ```
 ##  Autores
 Isadora de Mello - Ciências da computação - UNIVALI <br>
 Larissa de Sousa Gouvea - Engenharia da computação - UNIVALI
 
 ##  Melhorias Futuras
-1. Adicionar mais espécies de animais
-2. Implementar interface mais interativa
-3. Adicionar persistência com banco de dados
-4. Incluir sistema de aprendizado para refinar recomendações
+1. Adicionar mais espécies de animais<br>
+2. Implementar interface mais interativa<br>
+3. Adicionar persistência com banco de dados<br>
+4. Incluir sistema de aprendizado para refinar recomendações<br>
