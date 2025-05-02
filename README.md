@@ -94,7 +94,7 @@ Animal
 
 3. **Regras da árvore de decisão*:
 ```
-<b>Regras de Adequação do Ambiente</b>
+Regras de Adequação do Ambiente
 Regra 1
 Se: Tipo de moradia = apartamento, Sacada com tela = não
 Então: Adequação = Pouco adequado
@@ -135,7 +135,7 @@ Regra 10
 Se: Tipo de moradia = casa com quintal, Quintal cercado = sim, Ambiente com sombra = sim, Área do quintal < 60 m²
 Então: Adequação = Pouco adequado
 
-<b>Regras de Nível de Investimento</b>
+Regras de Nível de Investimento
 Regra 11
 Se: Pretende adotar = não
 Então: Investimento = Alto
@@ -164,7 +164,7 @@ Regra 17
 Se: Pretende adotar = sim, Cuidados especiais = não, Porte do animal = pequeno, Precisa de tosa = não, Preferência pessoal = dependente
 Então: Investimento = Médio
 
-<b>Regras de Recomendação de Animal</b>
+Regras de Recomendação de Animal
 Regra 18
 Se: Tempo disponível = baixo
 Então: Recomendação = Gato
