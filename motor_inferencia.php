@@ -139,30 +139,53 @@ class SistemaEspecialista
                     'tipo_moradia' => 'apartamento',
                     'sacada_com_tela' => 'nao'
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Falta de tela representa risco para pets, especialmente gatos.']
             ],
             [
                 'condicoes' => [
                     'tipo_moradia' => 'apartamento',
-                    'espaco_interno_m2' => ['30–40', '≥ 40'],
-                    'sacada_com_tela' => 'sim'
+                    'sacada_com_tela' => 'sim',
+                    'espaco_interno_m2' => ['30–40', '≥ 40']
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'adequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'adequado', 'mensagem' => '']
             ],
             [
                 'condicoes' => [
                     'tipo_moradia' => 'apartamento',
-                    'espaco_interno_m2' => '< 30',
-                    'sacada_com_tela' => 'sim'
+                    'sacada_com_tela' => 'sim',
+                    'espaco_interno_m2' => '< 30'
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => '']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'casa sem quintal',
+                    'pet_fica_dentro' => 'nao'
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => 'Animais não devem ficar soltos em casas sem quintal']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'casa sem quintal',
+                    'pet_fica_dentro' => 'sim',
+                    'espaco_interno_m2' => '≥ 40',
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Espaço é minimamente aceitável para manter o pet dentro de casa']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'casa sem quintal',
+                    'pet_fica_dentro' => 'sim',
+                    'espaco_interno_m2' => ['20–40', '< 20'],
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => 'Espaço interno muito limitado para acomodar um animal com segurança e conforto.']
             ],
             [
                 'condicoes' => [
                     'tipo_moradia' => 'casa com quintal',
                     'quintal_cercado' => 'nao',
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => 'Quintal não cercado oferece risco de fuga ou acidentes.']
             ],
             [
                 'condicoes' => [
@@ -170,7 +193,7 @@ class SistemaEspecialista
                     'quintal_cercado' => 'sim',
                     'ambiente_com_sombra' => 'nao',
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Falta de sombra pode causar estresse térmico em dias quentes.']
             ],
             [
                 'condicoes' => [
@@ -179,7 +202,7 @@ class SistemaEspecialista
                     'ambiente_com_sombra' => 'sim',
                     'area_quintal_m2' => '≥ 60'
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'muito adequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'muito adequado', 'mensagem' => '']
             ],
             [
                 'condicoes' => [
@@ -188,97 +211,83 @@ class SistemaEspecialista
                     'ambiente_com_sombra' => 'sim',
                     'area_quintal_m2' => '< 60'
                 ],
-                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado']
+                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Embora haja sombra, o espaço é reduzido.']
             ],
-            [
-                'condicoes' => [
-                    'tipo_moradia' => 'casa sem quintal',
-                    'pet_fica_dentro' => 'nao'
-                ],
-                'resultado' => [
-                    'fato' => 'adequado',
-                    'valor' => 'inadequado',
-                    'mensagem' => 'Animais não devem ficar soltos em casas sem quintal'
-                ]
-            ],
-            [
-                'condicoes' => [
-                    'tipo_moradia' => 'casa sem quintal',
-                    'pet_fica_dentro' => 'sim',
-                    'espaco_interno_m2' => ['30–40', '≥ 40'],
-                ],
-                'resultado' => [
-                    'fato' => 'adequado',
-                    'valor' => 'pouco adequado',
-                    'mensagem' => 'Espaço interno aceitável para casa sem quintal'
-                ]
-            ],
-            [
-                'condicoes' => [
-                    'tipo_moradia' => 'casa sem quintal',
-                    'pet_fica_dentro' => 'sim',
-                    'espaco_interno_m2' => '< 40'
-                ],
-                'resultado' => [
-                    'fato' => 'adequado',
-                    'valor' => 'inadequado',
-                    'mensagem' => 'Espaço interno insuficiente para casa sem quintal'
-                ]
-            ],
-            [
-                'condicoes' => [
-                    'tipo_moradia' => 'casa sem quintal'
-                ],
-                'resultado' => [
-                    'fato' => 'adequado',
-                    'valor' => 'indeterminado',
-                    'mensagem' => 'Informações insuficientes para avaliar adequação'
-                ]
-            ],
-
+           
             // Regras para determinar nível de investimento
             [
                 'condicoes' => [
-                    'porte_animal' => 'pequeno',
-                    'precisa_de_tosa' => 'nao',
-                    'cuidados_especiais' => 'nao'
+                    'pretende_adotar' => 'nao'
                 ],
-                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'baixo']
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Alto', 'mensagem' => 'A ausência de intenção de adoção indica que o investimento seria elevado (tempo/esforço).']
             ],
             [
                 'condicoes' => [
-                    'porte_animal' => 'medio',
-                    'precisa_de_tosa' => 'nao',
-                    'cuidados_especiais' => 'nao'
-                ],
-                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'médio']
-            ],
-            [
-                'condicoes' => [
-                    'porte_animal' => 'grande',
-                    'precisa_de_tosa' => 'sim',
-                    'cuidados_especiais' => 'nao'
-                ],
-                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'médio/alto']
-            ],
-            [
-                'condicoes' => [
+                    'pretende_adotar' => 'sim',
                     'cuidados_especiais' => 'sim'
                 ],
-                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'alto']
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Médio / Alto', 'mensagem' => 'Animais com necessidades especiais demandam maior dedicação e recursos.']
+            ],
+            [
+                'condicoes' => [
+                    'pretende_adotar' => 'sim',
+                    'cuidados_especiais' => 'nao',
+                    'porte_animal' => 'medio'
+                ],
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Médio', 'mensagem' => '']
+            ],
+            [
+                'condicoes' => [
+                    'pretende_adotar' => 'sim',
+                    'cuidados_especiais' => 'nao',
+                    'porte_animal' => 'grande'
+                ],
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Alto', 'mensagem' => 'Animais grandes geralmente requerem mais espaço e custos com alimentação/saúde.']
+            ],
+            [
+                'condicoes' => [
+                    'pretende_adotar' => 'sim',
+                    'cuidados_especiais' => 'nao',
+                    'porte_animal' => 'pequeno',
+                    'precisa_de_tosa' => 'sim'
+
+                ],
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Médio', 'mensagem' => 'Tosa regular implica custos frequentes e cuidados específicos.']
+            ],
+            [
+                'condicoes' => [
+                    'pretende_adotar' => 'sim',
+                    'cuidados_especiais' => 'nao',
+                    'porte_animal' => 'pequeno',
+                    'precisa_de_tosa' => 'nao',
+                    'preferencia_pessoal' => 'independente'
+
+                ],
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Baixo', 'mensagem' => '']
+            ],
+            [
+                'condicoes' => [
+                    'pretende_adotar' => 'sim',
+                    'cuidados_especiais' => 'nao',
+                    'porte_animal' => 'pequeno',
+                    'precisa_de_tosa' => 'nao',
+                    'preferencia_pessoal' => 'dependente'
+
+                ],
+                'resultado' => ['fato' => 'resultado_investimento', 'valor' => 'Médio', 'mensagem' => '']
             ],
 
             // Regras principais de recomendação
             [
                 'condicoes' => ['tempo_disponivel' => 'baixo'],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => 'Gatos demandam menos tempo e atenção diária comparado a cães.']
             ],
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => 'sedentario'
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => 'Perfil sedentário combina melhor com um pet menos exigente fisicamente.']
             ],
             [
                 'condicoes' => [
@@ -286,43 +295,43 @@ class SistemaEspecialista
                     'atividade_fisica' => 'ativo',
                     'adequado' => 'inadequado'
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Melhor repensar a adoção no momento']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Melhor repensar a adoção no momento', 'mensagem' => 'Mesmo com disposição, o ambiente inadequado inviabiliza uma adoção responsável.']
             ],
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => 'ativo',
                     'adequado' => 'pouco adequado',
-                    'resultado_investimento' => 'baixo'
+                    'resultado_investimento' => 'Baixo'
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => 'O investimento baixo e o ambiente apenas razoável indicam que um gato é mais viável.']
             ],
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => 'ativo',
                     'adequado' => 'pouco adequado',
-                    'resultado_investimento' => ['médio', 'médio/alto', 'alto']
+                    'resultado_investimento' => ['Médio', 'Médio / Alto', 'Alto']
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro pequeno']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro pequeno', 'mensagem' => 'Comprometimento permite adoção mesmo em ambiente menos ideal.']
             ],
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => 'ativo',
-                    'adequado' => 'muito adequado',
+                    'adequado' => ['muito adequado', 'adequado'],
                     'preferencia_pessoal' => ['independente', 'gato']
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => '']
             ],
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => 'ativo',
-                    'adequado' => 'muito adequado',
+                    'adequado' => ['muito adequado', 'adequado'],
                     'preferencia_pessoal' => ['dependente', 'cachorro']
                 ],
-                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro']
+                'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro', 'mensagem' => '']
             ]
         ];
     }

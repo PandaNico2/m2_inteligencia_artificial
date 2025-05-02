@@ -188,7 +188,7 @@
                         um animal?</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="tempo_disponivel" value="baixo" required> Pouco tempo
+                            <input type="radio" name="tempo_disponivel" value="baixo"> Pouco tempo
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="tempo_disponivel" value="alto"> Bastante tempo
@@ -201,7 +201,7 @@
                         física?</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="atividade_fisica" value="sedentario" required> Sedentário
+                            <input type="radio" name="atividade_fisica" value="sedentario"> Sedentário
                         </label>
                         <label class="radio-option">
                             <input type="radio" name="atividade_fisica" value="ativo"> Ativo
@@ -214,7 +214,7 @@
                         independentes ou que demandam mais atenção?</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="preferencia_pessoal" value="independente" required> Prefiro
+                            <input type="radio" name="preferencia_pessoal" value="independente"> Prefiro
                             animais
                             independentes
                         </label>
@@ -232,7 +232,7 @@
 
                 <div class="form-group">
                     <label>Qual o tipo da sua moradia?</label>
-                    <select name="tipo_moradia" id="tipo_moradia" required>
+                    <select name="tipo_moradia" id="tipo_moradia">
                         <option value>Selecione...</option>
                         <option value="apartamento">Apartamento</option>
                         <option value="casa sem quintal">Casa sem
@@ -321,10 +321,10 @@
                         <label>Espaço interno (m²):</label>
                         <div class="radio-group">
                             <label class="radio-option">
-                                <input type="radio" name="espaco_interno_m2" value="< 30"> Menos de 30m²
+                                <input type="radio" name="espaco_interno_m2" value="< 20"> Menos de 20m²
                             </label>
                             <label class="radio-option">
-                                <input type="radio" name="espaco_interno_m2" value="30–40"> Entre 30 e 40m²
+                                <input type="radio" name="espaco_interno_m2" value="20–40"> Entre 20 e 40m²
                             </label>
                             <label class="radio-option">
                                 <input type="radio" name="espaco_interno_m2" value="≥ 40"> 40m² ou mais
@@ -430,7 +430,10 @@
                     const tempoSelecionado = document.querySelector('input[name="tempo_disponivel"]:checked');
                     const atividadeSelecionada = document.querySelector('input[name="atividade_fisica"]:checked');
 
-                    if (tempoSelecionado && atividadeSelecionada) {
+                    // Verifica se tempo é "alto" E atividade é "ativo"
+                    if (tempoSelecionado && atividadeSelecionada &&
+                        tempoSelecionado.value === 'alto' &&
+                        atividadeSelecionada.value === 'ativo') {
                         ambienteSection.classList.remove('hidden');
                     } else {
                         ambienteSection.classList.add('hidden');
@@ -467,7 +470,7 @@
                 const formData = new FormData(form);
 
                 console.log(formData);
-                
+
 
                 // Enviar para o PHP via AJAX
                 fetch('motor_inferencia.php', {
@@ -495,35 +498,38 @@
 
                         // HTML para a recomendação principal
                         recomendacaoHtml = `
-                        <div class="result-section">
-                            <h3>Recomendação: <span class="${data.recomendacao === 'repense' ? 'repense' : ''}">${formatRecomendacao(data.recomendacao)}</span></h3>
-                            ${data.recomendacao === 'repense' ?
-                                '<p class="repense">Seu ambiente atual foi considerado inadequado para ter um pet. Recomendamos repensar a adoção no momento.</p>' :
-                                `<p>Baseado nas suas respostas, recomendamos um <strong>${formatRecomendacao(data.recomendacao)}</strong> como o animal mais adequado para seu estilo de vida.</p>`}
-                            
-                            <div class="result-grid">
-                                <div class="result-card">
-                                    <h4>Adequação do Ambiente</h4>
-                                    <div class="result-value ${adequacaoClass}">${formatAdequacao(data.adequacao_ambiente)}</div>
-                                    <p>${getAdequacaoDescription(data.adequacao_ambiente)}</p>
+                            <div class="result-section">
+                                <h3>Recomendação: <span class="${data.recomendacao === 'repense' ? 'repense' : ''}">${formatRecomendacao(data.recomendacao)}</span></h3>
+                                ${data.recomendacao === 'repense' ?
+                                                        '<p class="repense">Seu ambiente atual foi considerado inadequado para ter um pet. Recomendamos repensar a adoção no momento.</p>' :
+                                                        `<p>Baseado nas suas respostas, recomendamos um <strong>${formatRecomendacao(data.recomendacao)}</strong> como o animal mais adequado para seu estilo de vida.</p>
+                                    ${data.adequacao_ambiente === 'pouco adequado' && data.recomendacao === 'cachorro pequeno' ?
+                                                            '<p class="pouco-adequado">Comprometimento permite adoção mesmo em ambiente menos ideal.</p>' : ''}
+                                    `}
+                                
+                                <div class="result-grid">
+                                    <div class="result-card">
+                                        <h4>Adequação do Ambiente</h4>
+                                        <div class="result-value ${adequacaoClass}">${formatAdequacao(data.adequacao_ambiente)}</div>
+                                        <p>${getAdequacaoDescription(data.adequacao_ambiente)}</p>
+                                    </div>
+                                    
+                                    <div class="result-card">
+                                        <h4>Nível de Investimento</h4>
+                                        <div class="result-value">${formatInvestimento(data.nivel_investimento)}</div>
+                                        <p>${getInvestimentoDescription(data.nivel_investimento)}</p>
+                                    </div>
                                 </div>
                                 
-                                <div class="result-card">
-                                    <h4>Nível de Investimento</h4>
-                                    <div class="result-value">${formatInvestimento(data.nivel_investimento)}</div>
-                                    <p>${getInvestimentoDescription(data.nivel_investimento)}</p>
-                                </div>
+                                <h4 style="margin-top: 20px;">Detalhes da Análise</h4>
+                                <ul>
+                                    <li><strong>Tempo disponível:</strong> ${formData.get('tempo_disponivel') === 'baixo' ? 'Pouco' : 'Bastante'}</li>
+                                    <li><strong>Atividade física:</strong> ${formData.get('atividade_fisica') === 'sedentario' ? 'Sedentário' : 'Ativo'}</li>
+                                    <li><strong>Preferência:</strong> ${getPreferenciaText(formData.get('preferencia_pessoal'))}</li>
+                                    <li><strong>Tipo de moradia:</strong> ${getMoradiaText(formData.get('tipo_moradia'))}</li>
+                                </ul>
                             </div>
-                            
-                            <h4 style="margin-top: 20px;">Detalhes da Análise</h4>
-                            <ul>
-                                <li><strong>Tempo disponível:</strong> ${formData.get('tempo_disponivel') === 'baixo' ? 'Pouco' : 'Bastante'}</li>
-                                <li><strong>Atividade física:</strong> ${formData.get('atividade_fisica') === 'sedentario' ? 'Sedentário' : 'Ativo'}</li>
-                                <li><strong>Preferência:</strong> ${getPreferenciaText(formData.get('preferencia_pessoal'))}</li>
-                                <li><strong>Tipo de moradia:</strong> ${getMoradiaText(formData.get('tipo_moradia'))}</li>
-                            </ul>
-                        </div>
-                    `;
+                        `;
 
                         resultContent.innerHTML = recomendacaoHtml;
                         resultSection.classList.remove('hidden');
@@ -536,7 +542,6 @@
                     });
             });
 
-            // Funções auxiliares para formatação
             function formatRecomendacao(valor) {
                 const map = {
                     'gato': 'Gato',
