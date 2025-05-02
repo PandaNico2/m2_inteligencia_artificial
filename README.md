@@ -48,7 +48,6 @@ O sistema utiliza:
 
 2. **Fluxo de decisão**:
 ```
-2. **Fluxo de decisão**:
 Pessoa
   ├── tem Tempo → Tempo
   ├── tem Atividade Física → Atividade
