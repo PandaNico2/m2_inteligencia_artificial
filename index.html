@@ -442,7 +442,7 @@
                     // Verifica se tempo é "alto" E atividade é "ativo"
                     if (tempoSelecionado && atividadeSelecionada &&
                         tempoSelecionado.value === 'alto' &&
-                        atividadeSelecionada.value === 'ativo') {
+                        (atividadeSelecionada.value === 'ativo' || atividadeSelecionada.value === 'moderado')) {
                         ambienteSection.classList.remove('hidden');
                     } else {
                         ambienteSection.classList.add('hidden');
