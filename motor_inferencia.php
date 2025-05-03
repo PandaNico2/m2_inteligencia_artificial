@@ -145,7 +145,7 @@ class SistemaEspecialista
                 'condicoes' => [
                     'tipo_moradia' => 'apartamento',
                     'sacada_com_tela' => 'sim',
-                    'espaco_interno_m2' => ['30–40', '≥ 40']
+                    'espaco_interno_m2' => 'grande'
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'adequado', 'mensagem' => '']
             ],
@@ -153,7 +153,15 @@ class SistemaEspecialista
                 'condicoes' => [
                     'tipo_moradia' => 'apartamento',
                     'sacada_com_tela' => 'sim',
-                    'espaco_interno_m2' => '< 30'
+                    'espaco_interno_m2' => 'medio'
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'Pouco adequado', 'mensagem' => '']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'apartamento',
+                    'sacada_com_tela' => 'sim',
+                    'espaco_interno_m2' => 'pequeno'
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => '']
             ],
@@ -168,7 +176,7 @@ class SistemaEspecialista
                 'condicoes' => [
                     'tipo_moradia' => 'casa sem quintal',
                     'pet_fica_dentro' => 'sim',
-                    'espaco_interno_m2' => '≥ 40',
+                    'espaco_interno_m2' => 'grande',
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Espaço é minimamente aceitável para manter o pet dentro de casa']
             ],
@@ -176,7 +184,15 @@ class SistemaEspecialista
                 'condicoes' => [
                     'tipo_moradia' => 'casa sem quintal',
                     'pet_fica_dentro' => 'sim',
-                    'espaco_interno_m2' => ['20–40', '< 20'],
+                    'espaco_interno_m2' => 'medio',
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => '']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'casa sem quintal',
+                    'pet_fica_dentro' => 'sim',
+                    'espaco_interno_m2' => 'pequeno',
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => 'Espaço interno muito limitado para acomodar um animal com segurança e conforto.']
             ],
@@ -200,7 +216,7 @@ class SistemaEspecialista
                     'tipo_moradia' => 'casa com quintal',
                     'quintal_cercado' => 'sim',
                     'ambiente_com_sombra' => 'sim',
-                    'area_quintal_m2' => '≥ 60'
+                    'area_quintal_m2' => 'grande'
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'muito adequado', 'mensagem' => '']
             ],
@@ -209,9 +225,18 @@ class SistemaEspecialista
                     'tipo_moradia' => 'casa com quintal',
                     'quintal_cercado' => 'sim',
                     'ambiente_com_sombra' => 'sim',
-                    'area_quintal_m2' => '< 60'
+                    'area_quintal_m2' => 'medio'
                 ],
                 'resultado' => ['fato' => 'adequado', 'valor' => 'pouco adequado', 'mensagem' => 'Embora haja sombra, o espaço é reduzido.']
+            ],
+            [
+                'condicoes' => [
+                    'tipo_moradia' => 'casa com quintal',
+                    'quintal_cercado' => 'sim',
+                    'ambiente_com_sombra' => 'sim',
+                    'area_quintal_m2' => 'pequeno'
+                ],
+                'resultado' => ['fato' => 'adequado', 'valor' => 'inadequado', 'mensagem' => 'O espaço não é suficiente.']
             ],
            
             // Regras para determinar nível de investimento
@@ -284,7 +309,7 @@ class SistemaEspecialista
             ],
             [
                 'condicoes' => [
-                    'tempo_disponivel' => 'alto',
+                    'tempo_disponivel' => ['alto', 'medio'],
                     'atividade_fisica' => 'sedentario'
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => 'Perfil sedentário combina melhor com um pet menos exigente fisicamente.']
