@@ -317,7 +317,7 @@ class SistemaEspecialista
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
-                    'atividade_fisica' => 'ativo',
+                    'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => 'inadequado'
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Melhor repensar a adoção no momento', 'mensagem' => 'Mesmo com disposição, o ambiente inadequado inviabiliza uma adoção responsável.']
@@ -325,7 +325,7 @@ class SistemaEspecialista
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
-                    'atividade_fisica' => 'ativo',
+                    'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => 'pouco adequado',
                     'resultado_investimento' => 'Baixo'
                 ],
@@ -334,7 +334,7 @@ class SistemaEspecialista
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
-                    'atividade_fisica' => 'ativo',
+                    'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => 'pouco adequado',
                     'resultado_investimento' => ['Médio', 'Médio / Alto', 'Alto']
                 ],
@@ -343,7 +343,7 @@ class SistemaEspecialista
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
-                    'atividade_fisica' => 'ativo',
+                    'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => ['muito adequado', 'adequado'],
                     'preferencia_pessoal' => ['independente', 'gato']
                 ],
@@ -352,7 +352,7 @@ class SistemaEspecialista
             [
                 'condicoes' => [
                     'tempo_disponivel' => 'alto',
-                    'atividade_fisica' => 'ativo',
+                    'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => ['muito adequado', 'adequado'],
                     'preferencia_pessoal' => ['dependente', 'cachorro']
                 ],
