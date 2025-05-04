@@ -324,18 +324,18 @@ class SistemaEspecialista
             ],
             [
                 'condicoes' => [
-                    'tempo_disponivel' => 'alto',
+                    'tempo_disponivel' => ['alto', 'medio'],
                     'atividade_fisica' => ['ativo', 'moderado'],
-                    'adequado' => 'pouco adequado',
+                    'adequado' => ['pouco adequado', 'adequado'],
                     'resultado_investimento' => 'Baixo'
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => 'O investimento baixo e o ambiente apenas razoável indicam que um gato é mais viável.']
             ],
             [
                 'condicoes' => [
-                    'tempo_disponivel' => 'alto',
+                    'tempo_disponivel' => ['alto', 'medio'],
                     'atividade_fisica' => ['ativo', 'moderado'],
-                    'adequado' => 'pouco adequado',
+                    'adequado' => ['pouco adequado', 'adequado'],
                     'resultado_investimento' => ['Médio', 'Médio / Alto', 'Alto']
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro pequeno', 'mensagem' => 'Comprometimento permite adoção mesmo em ambiente menos ideal.']
@@ -345,7 +345,7 @@ class SistemaEspecialista
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => ['muito adequado', 'adequado'],
-                    'preferencia_pessoal' => ['independente', 'gato']
+                    'preferencia_pessoal' => ['independente']
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Gato', 'mensagem' => '']
             ],
@@ -354,27 +354,13 @@ class SistemaEspecialista
                     'tempo_disponivel' => 'alto',
                     'atividade_fisica' => ['ativo', 'moderado'],
                     'adequado' => ['muito adequado', 'adequado'],
-                    'preferencia_pessoal' => ['dependente', 'cachorro']
+                    'preferencia_pessoal' => ['dependente']
                 ],
                 'resultado' => ['fato' => 'recomendacao', 'valor' => 'Cachorro', 'mensagem' => '']
             ]
         ];
     }
 }
-
-// if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-//     $_POST = [
-//         'tempo_disponivel' => 'alto',
-//         'atividade_fisica' => 'ativo',
-//         'preferencia_pessoal' => 'dependente',
-//         'tipo_moradia' => 'casa sem quintal',
-//         'espaco_interno_m2' => '< 40',
-//         'pet_fica_dentro' => 'não',
-//         'porte_animal' => 'grande',
-//         'precisa_de_tosa' => 'sim'
-//     ];
-//     $_SERVER['REQUEST_METHOD'] = 'POST';
-// }
 
 // Script para processar o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
